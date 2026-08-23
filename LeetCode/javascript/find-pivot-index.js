@@ -3,24 +3,14 @@
  * @return {number}
  */
 const pivotIndex = (nums) => {
-  let sumArr = new Array();
+  const sum = nums.reduce((prev, curr) => prev + curr, 0);
+  let leftSum = 0;
 
   for (let i = 0; i < nums.length; i++) {
-    if (i == 0) {
-      sumArr[i] = nums[i];
-      continue;
-    }
-    sumArr[i] = nums[i] + sumArr[i - 1];
-  }
-
-  const total = sumArr[sumArr.length - 1];
-
-  for (let i = 0; i < sumArr.length; i++) {
-    const currSum = sumArr[i];
-
-    if (total - currSum === currSum - nums[i]) {
+    if (sum - nums[i] - leftSum === leftSum) {
       return i;
     }
+    leftSum += nums[i];
   }
 
   return -1;
